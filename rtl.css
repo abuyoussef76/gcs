@@ -1,0 +1,10 @@
+/* GCS Theme — RTL Overrides (auto-loaded for RTL sites) */
+body { direction: rtl; text-align: right; }
+.nav-links { flex-direction: row-reverse; }
+.sec-tag::before { margin-left: 0; margin-right: 0; }
+.gold-bar { background: linear-gradient(to right, var(--gold), transparent); }
+.foot-newsletter { flex-direction: row; }
+.slide-content { padding: 0 7rem 0 2rem; }
+@media (max-width: 1024px) {
+  .slide-content { padding: 0 2.5rem; }
+}

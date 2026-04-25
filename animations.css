@@ -1,0 +1,340 @@
+/* =============================================
+   GCS Theme — Animations & Effects Extension
+   ملف الأنيميشن والمؤثرات المتقدمة
+   ============================================= */
+
+/* ── Page Loading Screen ── */
+#gcs-loader {
+  position: fixed; inset: 0; z-index: 10000;
+  background: var(--dark);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.5rem;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+#gcs-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.loader-logo {
+  width: 80px; height: 80px;
+  animation: loaderPulse 1.5s ease-in-out infinite;
+}
+.loader-bar-wrap {
+  width: 200px; height: 2px; background: rgba(201,168,76,.15);
+  overflow: hidden; position: relative;
+}
+.loader-bar {
+  position: absolute; top: 0; left: 0; height: 100%;
+  background: linear-gradient(to right, var(--gold3), var(--gold), var(--gold2));
+  animation: loaderBar 1.8s ease-in-out forwards;
+  width: 0%;
+}
+.loader-pct {
+  font-size: .72rem; letter-spacing: 4px; color: var(--gray);
+  font-family: var(--font-primary);
+  animation: loaderCount 1.8s ease-in-out forwards;
+}
+@keyframes loaderPulse { 0%,100%{opacity:.5;transform:scale(.95)} 50%{opacity:1;transform:scale(1)} }
+@keyframes loaderBar    { 0%{width:0} 60%{width:70%} 80%{width:90%} 100%{width:100%} }
+
+/* ── Slide Geometric Lines ── */
+.geo-line {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  transition: stroke-dashoffset 2s ease .4s;
+}
+.slide.active .geo-line { stroke-dashoffset: 0; }
+
+/* ── Glowing Gold Effect ── */
+.glow-gold {
+  box-shadow: 0 0 20px rgba(201,168,76,.15), 0 0 60px rgba(201,168,76,.05);
+}
+.glow-gold:hover {
+  box-shadow: 0 0 30px rgba(201,168,76,.3), 0 0 80px rgba(201,168,76,.1);
+}
+
+/* ── Text Gradient Animation ── */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.text-gradient-anim {
+  background: linear-gradient(270deg, var(--gold2), var(--gold), var(--gold3), var(--gold));
+  background-size: 300% 300%;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* ── Staggered children reveal ── */
+.stagger-children > * {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .6s, transform .6s;
+}
+.stagger-children.on > *:nth-child(1) { opacity:1; transform:none; transition-delay:.05s; }
+.stagger-children.on > *:nth-child(2) { opacity:1; transform:none; transition-delay:.12s; }
+.stagger-children.on > *:nth-child(3) { opacity:1; transform:none; transition-delay:.19s; }
+.stagger-children.on > *:nth-child(4) { opacity:1; transform:none; transition-delay:.26s; }
+.stagger-children.on > *:nth-child(5) { opacity:1; transform:none; transition-delay:.33s; }
+.stagger-children.on > *:nth-child(6) { opacity:1; transform:none; transition-delay:.40s; }
+
+/* ── Horizontal scroll fade edges ── */
+.proj-scroll::before,
+.proj-scroll::after {
+  content: '';
+  position: sticky;
+  top: 0; bottom: 0;
+  width: 80px;
+  flex-shrink: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.proj-scroll::before { right: 0; background: linear-gradient(to left, var(--dark2), transparent); }
+.proj-scroll::after  { left: 0;  background: linear-gradient(to right, var(--dark2), transparent); }
+
+/* ── Service card number counter ── */
+.srv-num {
+  transition: color .4s, transform .4s;
+}
+.srv:hover .srv-num { transform: scale(1.1) translateX(-5px); }
+
+/* ── Gold shimmer on hover ── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.shimmer-hover {
+  position: relative; overflow: hidden;
+}
+.shimmer-hover::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(201,168,76,.08) 50%, transparent 60%);
+  background-size: 200% 100%;
+  opacity: 0; transition: opacity .3s;
+}
+.shimmer-hover:hover::before {
+  opacity: 1;
+  animation: shimmer .8s linear;
+}
+
+/* ── Stats bar number ── */
+.stat-num {
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Floating animation (badge) ── */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.float-anim { animation: float 3s ease-in-out infinite; }
+
+/* ── Teal accent line on active nav ── */
+.nav-links li.current-menu-item > a {
+  color: var(--gold);
+}
+.nav-links li.current-menu-item > a::after {
+  width: 100%;
+  background: linear-gradient(to left, var(--gold), var(--gold3));
+}
+
+/* ── Scroll progress bar ── */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: linear-gradient(to left, var(--gold2), var(--gold));
+  z-index: 9999; transition: width .1s linear;
+  box-shadow: 0 0 8px rgba(201,168,76,.5);
+}
+
+/* ── Image reveal with clip-path ── */
+.clip-reveal {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1s cubic-bezier(.77,0,.175,1);
+}
+.clip-reveal.on { clip-path: inset(0 0% 0 0); }
+
+/* ── Counter number style ── */
+.count-up {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* ── Tilt card effect ── */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform .1s ease;
+}
+
+/* ── Button ripple ── */
+.btn-primary,
+.btn-outline,
+.btn-ghost {
+  position: relative; overflow: hidden;
+}
+.btn-primary::after,
+.btn-outline::after,
+.btn-ghost::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  width: 0; height: 0;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  transition: width .5s, height .5s, opacity .5s;
+  opacity: 0;
+}
+.btn-primary:active::after,
+.btn-outline:active::after,
+.btn-ghost:active::after {
+  width: 200px; height: 200px; opacity: 0;
+}
+
+/* ── Why badge glow ── */
+.why-badge {
+  box-shadow: 0 0 30px rgba(201,168,76,.4), 0 0 60px rgba(201,168,76,.15);
+}
+
+/* ── Project card overlay gradient animation ── */
+.proj-card .proj-ov {
+  transition: opacity .4s;
+}
+.proj-card:hover .proj-ov {
+  background: linear-gradient(to top, rgba(0,0,0,.96) 0%, rgba(0,0,0,.3) 55%, rgba(0,0,0,.1) 100%);
+}
+
+/* ── Testimonial card quote mark ── */
+.testi-q {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* ── Footer gradient top border ── */
+.gcs-footer::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), var(--teal2), var(--gold), transparent);
+  opacity: .4;
+}
+
+/* ── CTA section animated bg circles ── */
+.cta-sec .cta-circle {
+  position: absolute; border-radius: 50%;
+  border: .5px solid rgba(201,168,76,.06);
+  animation: expandCircle 6s ease-in-out infinite;
+}
+.cta-sec .cta-circle:nth-child(2) { animation-delay: 2s; }
+.cta-sec .cta-circle:nth-child(3) { animation-delay: 4s; }
+@keyframes expandCircle {
+  0%   { transform: translate(-50%,-50%) scale(.5); opacity:.6; }
+  100% { transform: translate(-50%,-50%) scale(1.8); opacity:0; }
+}
+
+/* ── Marquee hover item highlight ── */
+.marquee-item:hover { color: var(--dark2); }
+.marquee-item::before {
+  content: '◆'; font-size: .5rem;
+  margin-left: 1.5rem;
+}
+
+/* ── Services grid hover connector line ── */
+.services-grid {
+  position: relative;
+}
+
+/* ── Nav logo shimmer ── */
+.nav-logo img,
+.nav-logo .custom-logo {
+  transition: filter .4s, transform .4s;
+}
+.nav-logo:hover img,
+.nav-logo:hover .custom-logo {
+  transform: rotate(-3deg) scale(1.05);
+}
+
+/* ── Scroll snap for mobile project cards ── */
+@media (max-width: 768px) {
+  .proj-scroll {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .proj-card {
+    scroll-snap-align: start;
+    width: 82vw;
+  }
+}
+
+/* ── Print styles ── */
+@media print {
+  #gcs-cursor, #gcs-cursor-ring, #gcs-loader,
+  .gcs-nav, .back-to-top, .whatsapp-float,
+  .slider-arrows, .slider-dots, .scroll-ind,
+  #scroll-progress { display: none !important; }
+
+  body { background: white; color: black; cursor: auto; }
+  .page-hero { padding: 3rem 2rem; min-height: auto; }
+  .gcs-footer { background: #f5f5f5; }
+  a { color: black; }
+}
+
+/* ── Pagination styles ── */
+.page-numbers {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  border: .5px solid rgba(201,168,76,.2);
+  color: var(--gray); font-size: .88rem;
+  text-decoration: none; transition: all .3s;
+  margin: 0 2px;
+}
+.page-numbers:hover,
+.page-numbers.current {
+  background: var(--gold); color: var(--dark);
+  border-color: var(--gold);
+}
+.page-numbers.prev,
+.page-numbers.next { width: auto; padding: 0 1rem; }
+
+nav.navigation .nav-links {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 4px;
+}
+
+/* ── Breadcrumb ── */
+.gcs-breadcrumb {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .78rem; color: var(--gray2); margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.gcs-breadcrumb a { color: var(--gray); transition: color .3s; }
+.gcs-breadcrumb a:hover { color: var(--gold); }
+.gcs-breadcrumb .sep { color: var(--gray2); }
+.gcs-breadcrumb .current { color: var(--gold); }
+
+/* ── WooCommerce basic ── */
+.woocommerce .price { color: var(--gold) !important; }
+.woocommerce button.button,
+.woocommerce input.button {
+  background: var(--gold) !important; color: var(--dark) !important;
+  font-family: var(--font-primary) !important;
+  border: none !important; border-radius: 0 !important;
+}
+.woocommerce button.button:hover { background: var(--gold2) !important; }
+
+/* ── Accessibility ── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ── Selection color ── */
+::selection { background: rgba(201,168,76,.25); color: var(--white); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark2); }
+::-webkit-scrollbar-thumb { background: var(--gold3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
